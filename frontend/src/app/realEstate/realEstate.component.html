@@ -1,0 +1,59 @@
+<p *ngIf="error != null">{{ error }}</p>
+
+
+  <div style="text-align: center;">
+    <table class="table table-hover" >
+      <thead class="thead-light">
+      <tr><th>Адрес</th><th>Площадь</th><th>Стоимость</th></tr> <!--ряд с ячейками заголовков-->
+      </thead>
+      <tbody>
+      <tr *ngFor="let realEstate of realEstates">
+        <td>
+          {{ realEstate.address }}
+        </td>
+        <td>
+          {{ realEstate.area }}
+        </td>
+        <td>
+          {{ realEstate.cost }}
+        </td>
+        <div style="text-align: left;">
+
+          <button class="btn btn-secondary btn-sm" (click)="openDialog(realEstate.id)" *ngIf="role == 'ROLE_ADMIN'">Изменить</button>
+          <button class="btn btn-secondary btn-sm" (click)="delete(realEstate.id)" *ngIf="role == 'ROLE_ADMIN'">Удалить</button>
+          <button class="btn btn-secondary btn-sm"  (click)="openCost(realEstate.id)" *ngIf="role == 'ROLE_ADMIN'">Оценить</button>
+        </div>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+<button class="btn btn-success" (click)="openDialog(null)" *ngIf="role == 'ROLE_ADMIN'">Добавить</button>
+
+<ng-template #dialogRef let-data>
+  <h5 mat-dialog-title>Добавить недвижимость</h5>
+  <div mat-dialog-content>
+    Адрес: <input class="input-group-text" type="text" [(ngModel)]="data.address" />
+    Площадь: <input class="input-group-text" type="text" [(ngModel)]="data.area" />
+    Стоимость: <input class="input-group-text" type="text" [(ngModel)]="data.cost" />
+  </div>
+  <div mat-dialog-actions>
+    <button class="btn btn-success" mat-button mat-dialog-close="save">Сохранить</button>
+    <button class="btn btn-secondary" mat-button mat-dialog-close="close">Отменить</button>
+  </div>
+</ng-template>
+
+<ng-template #dialogCost let-data>
+  <h5 mat-dialog-title>Оценить недвижимость</h5>
+  <div mat-dialog-content>
+    Адрес: <input readonly class="input-group-text" type="text" [(ngModel)]="data.address " />
+    Площадь: <input readonly class="input-group-text" type="text" [(ngModel)]="data.area" />
+    Стоимость: <input class="input-group-text" type="text" [(ngModel)]="data.cost" />
+  </div>
+  <div mat-dialog-actions>
+    <button class="btn btn-success" mat-button mat-dialog-close="evaluate">Оценить</button>
+    <button class="btn btn-secondary" mat-button mat-dialog-close="close">Отменить</button>
+  </div>
+</ng-template>
+

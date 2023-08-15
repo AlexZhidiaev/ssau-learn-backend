@@ -1,0 +1,13 @@
+<p *ngIf="error != null">{{ error }}</p>
+
+<div *ngFor="let book of books">{{ book.name }} <button (click)="openDialog(book.id)" *ngIf="role == 'ROLE_ADMIN'">Edit</button> <button (click)="delete(book.id)" *ngIf="role == 'ROLE_ADMIN'">Delete</button></div>
+
+<button (click)="openDialog(null)" *ngIf="role == 'ROLE_ADMIN'">New</button>
+
+<ng-template #dialogRef let-data>
+  <h5>Edit the book</h5>
+  Title: <input type="text" [(ngModel)]="data.name" />
+  <br/>
+  <button mat-button mat-dialog-close="save">Save</button>
+  <button mat-button mat-dialog-close="close">Close</button>
+</ng-template>

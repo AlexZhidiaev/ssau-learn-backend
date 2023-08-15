@@ -1,0 +1,101 @@
+<p *ngIf="error != null">{{ error }}</p>
+  <table class="table table-hover">
+    <thead class="thead-light">
+    <tr><th>Дата</th><th>Время</th><th>Комиссия</th><th>Клиент</th><th>Риэлтор</th><th>Недвижимость</th><th>Тип недвижимости</th></tr> <!--ряд с ячейками заголовков-->
+    </thead>
+    <tbody>
+    <tr *ngFor="let deal of deals">
+      <td>
+        {{ deal.date }}
+      </td>
+      <td>
+        {{ deal.time }}
+      </td>
+      <td>
+        {{ deal.commission }}
+      </td>
+      <td>
+        <div *ngFor="let client of clients">
+          <div *ngIf="deal.client_id == client.id">
+            {{ client.fio }}
+          </div>
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let realtor of realtors">
+          <div *ngIf="deal.realtor_id == realtor.id">
+            {{ realtor.fio }}
+          </div>
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let realEstate of realEstates">
+          <div *ngIf="deal.real_estate_id == realEstate.id">
+            {{ realEstate.address }}
+          </div>
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let dealType of dealTypes">
+          <div *ngIf="deal.deal_type_id == dealType.id">
+            {{ dealType.name }}
+          </div>
+        </div>
+      </td>
+      <div style="text-align: left;">
+        <button class="btn btn-secondary btn-sm" (click)="openDialog(deal.id)" *ngIf="role == 'ROLE_ADMIN'">Изменить</button>
+        <button class="btn btn-secondary btn-sm" (click)="delete(deal.id)" *ngIf="role == 'ROLE_ADMIN'">Удалить</button>
+      </div>
+    </tr>
+    </tbody>
+  </table>
+  <br />
+
+<button class="btn btn-success" (click)="openDialog(null)" *ngIf="role == 'ROLE_ADMIN'">Добавить</button>
+
+<ng-template #dialogRef let-data>
+  <h5 mat-dialog-title>Редактировать сделку</h5>
+  <div mat-dialog-content>
+    Дата: <input class="input-group-text" type="date" [(ngModel)]="data.date" />
+    Время: <input class="input-group-text" type="time" [(ngModel)]="data.time" />
+    Коммисия: <input class="input-group-text" type="text" [(ngModel)]="data.commission" />
+    Клиенты:
+    <div class="form-group">
+      <select class="form-control" name="data" [(ngModel)]="data.client_id" #dataClient="ngModel">
+        <option *ngFor="let client of clients" [value]="client.id">
+          {{client.fio}}
+        </option>
+      </select>
+    </div>
+    Риэлторы:
+    <div class="form-group">
+      <select class="form-control" name="data" [(ngModel)]="data.realtor_id" #dataRealtor="ngModel">
+        <option *ngFor="let realtor of realtors" [value]="realtor.id">
+          {{realtor.fio}}
+        </option>
+      </select>
+    </div>
+    Недвижимость:
+    <div class="form-group">
+      <select class="form-control" name="data" [(ngModel)]="data.real_estate_id" #dataRealEstate="ngModel">
+        <option *ngFor="let realEstate of realEstates" [value]="realEstate.id">
+          {{realEstate.address}}
+        </option>
+      </select>
+    </div>
+    Тип недвижимости:
+    <div class="form-group">
+      <select class="form-control" name="data" [(ngModel)]="data.deal_type_id" #dataDealType="ngModel">
+        <option *ngFor="let dealType of dealTypes" [value]="dealType.id">
+          {{dealType.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button class="btn btn-success" mat-dialog-close (click)="save(dataClient,dataRealtor,dataRealEstate,dataDealType)">
+      Сохранить
+    </button>
+    <button class="btn btn-secondary" mat-button mat-dialog-close="close">Отменить</button>
+  </div>
+</ng-template>

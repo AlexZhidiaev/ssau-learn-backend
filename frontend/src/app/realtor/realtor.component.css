@@ -1,0 +1,50 @@
+.error {
+  font: 14pt red;
+  margin-top: 20px;
+
+}
+
+table {
+  background: rgba(220,220,255,0.7);
+  border-spacing: 10px; /* Расстояние между ячеек */
+  border-radius: 15px;
+  text-align: center;
+}
+
+form
+{
+  background: #f5e8d0; /* Цвет фона таблицы */
+  border-spacing: 10px; /* Расстояние между ячеек */
+}
+button
+{
+  margin-top:10px;
+  margin-left: 5px;
+}
+time
+{
+  border-radius: 15px;
+
+}
+able {
+  width: 716px; /* 140px * 5 column + 16px scrollbar width */
+  border-spacing: 0;
+}
+
+tbody, thead tr { display: block; }
+
+tbody {
+  height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+tbody td, thead th, trow tr {
+  width: 150px;
+}
+
+
+thead th:last-child {
+  width: 150px;
+}
+

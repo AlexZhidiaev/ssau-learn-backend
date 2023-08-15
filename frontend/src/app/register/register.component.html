@@ -1,0 +1,51 @@
+<div class="col-md-12">
+  <div class="card card-container">
+
+    <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="login">Логин</label>
+        <input type="text" class="form-control" name="login" [(ngModel)]="form.login" required minlength="5" maxlength="20" #login="ngModel" />
+        <div class="alert-danger" *ngIf="login.errors && f.submitted">
+          <div *ngIf="login.errors.required">Введите логин</div>
+          <div *ngIf="login.errors.minlength">
+            Логин должен состоять минимум из 5 символов
+          </div>
+          <div *ngIf="login.errors.maxlength">
+            Логин должен состоять максимум из 25 символов
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Почта</label>
+        <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel" />
+        <div class="alert-danger" *ngIf="email.errors && f.submitted">
+          <div *ngIf="email.errors.required">Введите почту</div>
+          <div *ngIf="email.errors.email">
+            Адрес почты должен быть действительным
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Пароль</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="6" #password="ngModel" />
+        <div class="alert-danger" *ngIf="password.errors && f.submitted">
+          <div *ngIf="password.errors.required">Введите пароль</div>
+          <div *ngIf="password.errors.minlength">
+            Пароль должен содержать минимум 6 символов
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Регистрация</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Регистрация неуспешна.<br />{{ errorMessage }}
+      </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Успешно зарегистрирован!
+    </div>
+  </div>
+</div>

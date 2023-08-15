@@ -1,0 +1,44 @@
+<div id="app">
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <a href="#" class="navbar-brand">Виртуальный оператор</a>
+    <ul class="navbar-nav mr-auto" routerLinkActive="active">
+      <li class="nav-item">
+        <a href="/shelf" class="nav-link" *ngIf="isLoggedIn" routerLink="client">Клиенты</a>
+      </li>
+      <li class="nav-item">
+        <a href="/shelf" class="nav-link" *ngIf="isLoggedIn" routerLink="realtor">Риэлторы</a>
+      </li>
+      <li class="nav-item">
+        <a href="/shelf" class="nav-link" *ngIf="isLoggedIn" routerLink="realEstate">Недвижимость</a>
+      </li>
+      <li class="nav-item">
+        <a href="/shelf" class="nav-link" *ngIf="isLoggedIn" routerLink="dealType">Типы недвижимости</a>
+      </li>
+      <li class="nav-item">
+        <a href="/shelf" class="nav-link" *ngIf="isLoggedIn" routerLink="deal">Сделки</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+      <li class="nav-item">
+        <a href="/register" class="nav-link" routerLink="register">Регистрация</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link" routerLink="login">Вход</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-item">
+        <a href="/profile" class="nav-link" routerLink="profile">{{ login }}</a>
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()">Выход</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
